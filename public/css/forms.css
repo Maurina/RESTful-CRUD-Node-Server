@@ -1,0 +1,19 @@
+.form{
+    margin: 1rem 0;
+}
+
+.form label, form input{
+    display: block;
+    width: 100%;
+    margin-bottom: 0.25rem;
+}
+
+.form input{
+    border: 1px solid #333;
+    font: inherit;
+    border-radius: 2px;
+}
+
+.form input:focus{
+    outline-color: red;
+}
