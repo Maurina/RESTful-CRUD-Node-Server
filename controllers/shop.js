@@ -1,71 +1,109 @@
-const Product = require('../models/products')
-
-exports.getAddProduct = (req, res, next) => {
-    res.render('admin/edit-product', {
-        pageTitle: 'Add Product',
-        path: '/admin/add-product',
-        editing: false
-    })
-}
-
-exports.postAddProduct = (req, res, next) => {
-    const title = req.body.title
-    const imageUrl = req.body.imageUrl
-    const price = req.body.price
-    const description = req.body.description
-    const product = new Product(null, title, imageUrl, description, price)
-    product.save()
-    res.redirect('/')
-}
-
-exports.getEditProduct = (req, res, next) => {
-    const editMode = req.query.editMode
-    if (!editMode) {
-        return res.redirect('/')
-    }
-    const prodId = req.params.productId
-    Product.findById(prodId, product => {
-        if (!product){
-            return res.redirect('/')
-        }
-        res.render('admin/edit-product'{
-            pageTitle: 'Edit Product',
-            path: '/admin/edit-product',
-            editing: editMode,
-            product: product
-        })
-    })
-}
-
-exports.postEditProduct = (req, res, next) => {
-    const prodId = req.body.productId
-    const updatedTitle = req.body.title
-    const updatedPrice = req.body.price
-    const updatedImageUrl = req.body.imageUrl
-    const updatedDescription = req.body.description
-    const undatedProduct = new Product(
-        prodId,
-        updatedTitle,
-        updatedImageUrl,
-        updatedDescription,
-        updatedPrice
-    )
-    updatedProduct.save()
-    res.redirect('/admin/products')
-}
+const Product = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll(products => {
-        res.render('admin/products', {
-            prods: products,
-            pageTitle: 'Admin Products',
-            path: '/admin/products'
-        })
+  Product.fetchAll()
+    .then(products => {
+      res.render('shop/product-list', {
+        prods: products,
+        pageTitle: 'All Products',
+        path: '/products'
+      });
     })
-}
+    .catch(err => {
+      console.log(err);
+    });
+};
 
-exports.postDeletProduct = (req, res, next) => {
-    const prodId = req.body.productId
-    Product.deleteById(prodId)
-    res.redirect('/admin/products')
-}
+exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  // Product.findAll({ where: { id: prodId } })
+  //   .then(products => {
+  //     res.render('shop/product-detail', {
+  //       product: products[0],
+  //       pageTitle: products[0].title,
+  //       path: '/products'
+  //     });
+  //   })
+  //   .catch(err => console.log(err));
+  Product.findById(prodId)
+    .then(product => {
+      res.render('shop/product-detail', {
+        product: product,
+        pageTitle: product.title,
+        path: '/products'
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.getIndex = (req, res, next) => {
+  Product.fetchAll()
+    .then(products => {
+      res.render('shop/index', {
+        prods: products,
+        pageTitle: 'Shop',
+        path: '/'
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+exports.getCart = (req, res, next) => {
+  req.user
+    .getCart()
+    .then(products => {
+      res.render('shop/cart', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products: products
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postCart = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId)
+    .then(product => {
+      return req.user.addToCart(product);
+    })
+    .then(result => {
+      console.log(result);
+      res.redirect('/cart');
+    });
+};
+
+exports.postCartDeleteProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  req.user
+    .deleteItemFromCart(prodId)
+    .then(result => {
+      res.redirect('/cart');
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postOrder = (req, res, next) => {
+  let fetchedCart;
+  req.user
+    .addOrder()
+    .then(result => {
+      res.redirect('/orders');
+    })
+    .catch(err => console.log(err));
+};
+
+exports.getOrders = (req, res, next) => {
+  req.user
+    .getOrders()
+    .then(orders => {
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders',
+        orders: orders
+      });
+    })
+    .catch(err => console.log(err));
+};
