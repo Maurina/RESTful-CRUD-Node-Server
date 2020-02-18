@@ -31,14 +31,14 @@ module.exports = class Cart {
         updatedProduct = { id: id, qty: 1 };
         cart.products = [...cart.products, updatedProduct];
       }
-      cart.totalPrice = cart.totalPrice + +productPrice;
+    /*   cart.totalPrice = cart.totalPrice + +productPrice;
       fs.writeFile(p, JSON.stringify(cart), err => {
         console.log(err);
-      });
+      }); */
     });
   }
 
-  static deleteProduct(id, productPrice) {
+  static deleteProduct(id,/*  productDate */) {
     fs.readFile(p, (err, fileContent) => {
       if (err) {
         return;
@@ -52,8 +52,8 @@ module.exports = class Cart {
       updatedCart.products = updatedCart.products.filter(
         prod => prod.id !== id
       );
-      updatedCart.totalPrice =
-        updatedCart.totalPrice - productPrice * productQty;
+    /*   updatedCart.totalPrice =
+        updatedCart.totalPrice - productPrice * productQty; */
 
       fs.writeFile(p, JSON.stringify(updatedCart), err => {
         console.log(err);
