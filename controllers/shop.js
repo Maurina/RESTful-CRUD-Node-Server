@@ -30,7 +30,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
     .then(products => {
       res.render('shop/index', {
         prods: products,
@@ -42,6 +42,7 @@ exports.getIndex = (req, res, next) => {
       console.log(err);
     });
 };
+
 exports.getCart = (req, res, next) => {
   req.user
     .populate('cart.items.productId')
