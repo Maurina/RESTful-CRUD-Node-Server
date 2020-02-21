@@ -9,15 +9,12 @@
 [router.get](https://github.com/Maurina/RESTful-CRUD-Node-Server/blob/master/routes/admin.js)
 
 ### At least 1 endpoint allowing user to update an item 
-[Edit a Product](https://desolate-citadel-64807.herokuapp.com/admin/products)
 [router.post('/edit-product/', adminController.putEditProduct)](https://github.com/Maurina/RESTful-CRUD-Node-Server/blob/master/routes/admin.js)
 
 ### At least 1 endpoint allowing user to create an item 
-[Add New Products](https://desolate-citadel-64807.herokuapp.com/admin/add-product)
 [router.post('/add-product', adminController.postAddProduct)](https://github.com/Maurina/RESTful-CRUD-Node-Server/blob/master/routes/admin.js)
 
 ### At least 1 endpoint allowing user to delete an item 
-[Delete a Product](https://desolate-citadel-64807.herokuapp.com/admin/products)
 [router.post('/delete-product', adminController.postDeleteProduct)](https://github.com/Maurina/RESTful-CRUD-Node-Server/blob/master/routes/admin.js)
 
 ### Your datastore will contain at least 25 items
@@ -25,7 +22,11 @@
 
 ### Your app will be deployed to production using some service like Heroku, Digital Ocean, etc.
 [Heroku]( https://desolate-citadel-64807.herokuapp.com/)
- 
+
+## ejs view are used for the front-end user interface.  
+[View all Products](https://desolate-citadel-64807.herokuapp.com/)
+[Add New Products](https://desolate-citadel-64807.herokuapp.com/admin/add-product)
+[Edit or Delete a Product](https://desolate-citadel-64807.herokuapp.com/admin/products)
 
 ## install process : npm install 
-## ejs view are used for the front-end user interface. 
+
