@@ -22,10 +22,12 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-let port = process.env.port
+/* let port = process.env.port
 if (port == null || port == ''){
     port = 8080
-}
+} */
+
+const PORT = process.env.PORT || 8080;
 
 mongoose
 .connect('mongodb+srv://maurina:WRxMudDQJd5ilZUA@cluster0-ouof1.mongodb.net/test?retryWrites=true&w=majority')
