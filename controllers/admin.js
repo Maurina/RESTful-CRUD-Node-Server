@@ -23,7 +23,6 @@ exports.postAddProduct = (req, res, next) => {
   product
     .save()
     .then(result => {
-      // console.log(result);
       console.log('Created Product');
       res.redirect('/admin/products');
     })
@@ -53,7 +52,20 @@ exports.getEditProduct = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
-exports.postEditProduct = (req, res, next) => {
+/* exports.putEditCard('/name/update/:id', (req, res, next) => {
+  let id = {
+    _id: ObjectID(req.params.id)
+  };
+
+  dbase.collection("name").update({_id: id}, {$set:{'first_name': req.body.first_name, 'last_name': req.body.last_name}}, (err, result) => {
+    if(err) {
+      throw err;
+    }
+    res.send('user updated sucessfully');
+  });
+}); */
+
+exports.putEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedDate = req.body.date;
@@ -70,17 +82,14 @@ exports.postEditProduct = (req, res, next) => {
     })
     .then(result => {
       console.log('UPDATED PRODUCT!');
-      res.redirect('/admin/products');
+      res.redirect('/admin/products');  
     })
     .catch(err => console.log(err));
 };
 
 exports.getProducts = (req, res, next) => {
   Product.find()
-    // .select('title price -_id')
-    // .populate('userId', 'name')
     .then(products => {
-      console.log(products);
       res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
