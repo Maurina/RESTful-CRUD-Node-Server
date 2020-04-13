@@ -24,9 +24,9 @@
 [Heroku]( https://desolate-citadel-64807.herokuapp.com/)
 
 ## ejs view are used for the front-end user interface.  
-[View all Products](https://desolate-citadel-64807.herokuapp.com/)
-[Add New Products](https://desolate-citadel-64807.herokuapp.com/admin/add-product)
-[Edit or Delete a Product](https://desolate-citadel-64807.herokuapp.com/admin/products)
+* Item 1 [View all Products](https://desolate-citadel-64807.herokuapp.com/)
+* Item 2[Add New Products](https://desolate-citadel-64807.herokuapp.com/admin/add-product)
+* Item 3[Edit or Delete a Product](https://desolate-citadel-64807.herokuapp.com/admin/products)
 
 ## install process : npm install 
 
