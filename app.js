@@ -3,11 +3,16 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 const errorController = require('./controllers/error')
 
 const app = express();
 
+app.use(cors({
+    origin: '*'
+  }))
+  
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
