@@ -1,11 +1,20 @@
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
-  res.render('admin/edit-product', {
-    pageTitle: 'Add Product',
-    path: '/admin/add-product',
-    editing: false
+  const product = new Product( {
+    title: req.body.title,
+    date: req.body.date,
+    description: req.body.date,
+    imageUrl:req.body.date
+
   });
+  product
+  .save()
+  .then(result => {
+    console.log('Created New Product')
+    res.send('Created Product.  Check Database')
+  })
+  .catch(error => console.log(error))
 };
 
 exports.postAddProduct = (req, res, next) => {
@@ -24,7 +33,6 @@ exports.postAddProduct = (req, res, next) => {
     .save()
     .then(result => {
       console.log('Created Product');
-      res.redirect('/admin/products');
     })
     .catch(err => {
       console.log(err);
@@ -32,22 +40,22 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getEditProduct = (req, res, next) => {
-  const editMode = req.query.edit;
-  if (!editMode) {
-    return res.redirect('/');
-  }
-  const prodId = req.params.productId;
+  const prodId = req.body.productId
+  const updatedTitle = req.body.title
+  const updatedDate = req.body.title
+  const updatedDescription = req.body.title
+  const updatedImageUrl = req.body.imageUrl
+
   Product.findById(prodId)
     .then(product => {
-      if (!product) {
-        return res.redirect('/');
-      }
-      res.render('admin/edit-product', {
-        pageTitle: 'Edit Product',
-        path: '/admin/edit-product',
-        editing: editMode,
-        product: product
-      });
+      product.title = updatedTitle
+      product.date = updatedDate
+      product.description = updatedDescription
+      product.imageUrl = updatedImageUrl
+      return product.save()
+    })
+    .then(result => {
+      console.log('Updated Product')
     })
     .catch(err => console.log(err));
 };
@@ -82,7 +90,6 @@ exports.putEditProduct = (req, res, next) => {
     })
     .then(result => {
       console.log('UPDATED PRODUCT!');
-      res.redirect('/admin/products');  
     })
     .catch(err => console.log(err));
 };
@@ -90,11 +97,7 @@ exports.putEditProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
-      res.render('admin/products', {
-        prods: products,
-        pageTitle: 'Admin Products',
-        path: '/admin/products'
-      });
+      res.json(products)
     })
     .catch(err => console.log(err));
 };
@@ -104,7 +107,7 @@ exports.postDeleteProduct = (req, res, next) => {
   Product.findByIdAndRemove(prodId)
     .then(() => {
       console.log('DESTROYED PRODUCT');
-      res.redirect('/admin/products');
+      res.send('Deleted Product.  Check the database');
     })
     .catch(err => console.log(err));
 };
