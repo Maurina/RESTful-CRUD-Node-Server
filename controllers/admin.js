@@ -4,8 +4,9 @@ exports.getAddProduct = (req, res, next) => {
   const product = new Product( {
     title: req.body.title,
     date: req.body.date,
-    description: req.body.date,
-    imageUrl:req.body.date
+    description: req.body.description,
+    imageUrl:req.body.imageUrl,
+    source: req.body.source
 
   });
   product
@@ -22,12 +23,13 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const date = req.body.date;
   const description = req.body.description;
+  const source = req.body.source
   const product = new Product({
     title: title,
     date: date,
     description: description,
     imageUrl: imageUrl,
-    userId: req.user
+    source: source,
   });
   product
     .save()
@@ -42,9 +44,10 @@ exports.postAddProduct = (req, res, next) => {
 exports.getEditProduct = (req, res, next) => {
   const prodId = req.body.productId
   const updatedTitle = req.body.title
-  const updatedDate = req.body.title
-  const updatedDescription = req.body.title
+  const updatedDate = req.body.date
+  const updatedDescription = req.body.description
   const updatedImageUrl = req.body.imageUrl
+  const updatedSource = req.body.source
 
   Product.findById(prodId)
     .then(product => {
@@ -52,6 +55,7 @@ exports.getEditProduct = (req, res, next) => {
       product.date = updatedDate
       product.description = updatedDescription
       product.imageUrl = updatedImageUrl
+      product.source = updatedSource
       return product.save()
     })
     .then(result => {
@@ -79,6 +83,7 @@ exports.putEditProduct = (req, res, next) => {
   const updatedDate = req.body.date;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDescription = req.body.description;
+  const updatedSource = req.body.source;
 
   Product.findById(prodId)
     .then(product => {
@@ -86,6 +91,7 @@ exports.putEditProduct = (req, res, next) => {
       product.date = updatedDate;
       product.description = updatedDescription;
       product.imageUrl = updatedImageUrl;
+      product.source = updatedSource;
       return product.save();
     })
     .then(result => {

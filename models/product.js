@@ -9,16 +9,20 @@ const productSchema = new Schema({
   },
   date: {
     type: String,
-    required: true
+    required: false
   },
   description: {
     type: String,
-    required: true
+    required: false
   },
   imageUrl: {
     type: String,
-    required: true
+    required: false
   },
+  source: {
+    type: String,
+    required: false
+  }
   /* userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
