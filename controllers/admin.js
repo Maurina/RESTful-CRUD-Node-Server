@@ -35,6 +35,7 @@ exports.postAddProduct = (req, res, next) => {
     .save()
     .then(result => {
       console.log('Created Product');
+      res.send('Created Product! Check your DB')
     })
     .catch(err => {
       console.log(err);
@@ -64,21 +65,9 @@ exports.getEditProduct = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
-/* exports.putEditCard('/name/update/:id', (req, res, next) => {
-  let id = {
-    _id: ObjectID(req.params.id)
-  };
 
-  dbase.collection("name").update({_id: id}, {$set:{'first_name': req.body.first_name, 'last_name': req.body.last_name}}, (err, result) => {
-    if(err) {
-      throw err;
-    }
-    res.send('user updated sucessfully');
-  });
-}); */
-
-exports.putEditProduct = (req, res, next) => {
-  const prodId = req.body.productId;
+exports.postEditProduct = (req, res, next) => {
+  const prodId = req.body.id;
   const updatedTitle = req.body.title;
   const updatedDate = req.body.date;
   const updatedImageUrl = req.body.imageUrl;
@@ -95,7 +84,7 @@ exports.putEditProduct = (req, res, next) => {
       return product.save();
     })
     .then(result => {
-      console.log('UPDATED PRODUCT!');
+      console.log(product);
     })
     .catch(err => console.log(err));
 };
@@ -109,11 +98,11 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.postDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
+  const prodId = req.body.id;
   Product.findByIdAndRemove(prodId)
     .then(() => {
       console.log('DESTROYED PRODUCT');
-      res.send('Deleted Product.  Check the database');
+      res.send(prodId);
     })
     .catch(err => console.log(err));
 };

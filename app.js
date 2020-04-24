@@ -1,11 +1,10 @@
-const path = require('path');
+
 
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const cors = require('cors')
 
-const errorController = require('./controllers/error')
 
 const app = express();
 
@@ -13,19 +12,17 @@ app.use(cors({
     origin: '*',
   }))
   
-app.set('view engine', 'ejs');
-app.set('views', 'views');
+
 
 const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.use('/admin', adminRoutes);
-app.use(shopRoutes);
 
-app.use(errorController.get404);
+
+
 
 let port = process.env.PORT
 if (port == null || port == ''){
